@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  mongo_db:
+    container_name: container_name
+    image: mongo:latest
+    restart: always
+    volumes:
+      - mongo_db:/data/db
+
+  app:
+    build: .
+    ports:
+      - "4000:3000"
+    environment:
+      - DB_URL=mongodb+srv://jemalm:jemalm@cluster0.hslwzy7.mongodb.net/?retryWrites=true&w=majority
+      - PORT=10000
+    depends_on:
+      - mongo_db
+
+volumes:
+  mongo_db:
