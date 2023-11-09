@@ -37,7 +37,7 @@ const deleteSong = catchValidationErrors(async (req, res, next) => {
             throw new ErrorHandller('Invalid song ID', 400);
         }
 
-        const deletedSong = await Song.findByIdAndRemove(songId);
+        const deletedSong = await Song.findOneAndDelete({ _id: songId });
 
         if (!deletedSong) {
             throw new ErrorHandller('Song not found', 404);
@@ -48,6 +48,7 @@ const deleteSong = catchValidationErrors(async (req, res, next) => {
         next(error);
     }
 });
+
 
 const updateSong = catchValidationErrors(async (req, res, next) => {
     try {
