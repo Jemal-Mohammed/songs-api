@@ -9,17 +9,11 @@ class APIFeatures{
           this.query = this.query.find({
             $or: [
               {
-                type: {
+                title: {
                   $regex: keyword,
                   $options: 'i'
                 }
               },
-              {
-                status: {
-                  $regex: keyword,
-                  $options: 'i'
-                }
-              }
             ]
           });
         }

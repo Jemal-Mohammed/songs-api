@@ -23,7 +23,7 @@ const createSong = catchValidationErrors(async (req, res, next) => {
 const listSongs = catchValidationErrors(async (req, res, next) => {
     const resPerPage = 8;
     const count = await Song.countDocuments();
-    const apiFeatures = new APIFeatures(Song.find({type:req.params.genre}), req.query).
+    const apiFeatures = new APIFeatures(Song.find({genere:req.params.keyword}), req.query).
     search()
     .filter()
     .pagination(resPerPage)
