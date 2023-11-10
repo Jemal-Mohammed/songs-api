@@ -30,8 +30,8 @@ const listSongs = catchValidationErrors(async (req, res, next) => {
 
 const deleteSong = catchValidationErrors(async (req, res, next) => {
     try {
-        const { songId } = req.params;
-
+        const  songId  = req.params.id;
+console.log(songId);
         // Ensure a valid song ID is provided for deletion
         if (!songId) {
             throw new ErrorHandller('Invalid song ID', 400);
