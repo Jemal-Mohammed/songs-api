@@ -11,7 +11,7 @@ services:
   app:
     build: .
     ports:
-      - "4000:3000"
+      - "4000:10000"
     environment:
       - DB_URL=mongodb+srv://jemalm:jemalm@cluster0.hslwzy7.mongodb.net/?retryWrites=true&w=majority
       - PORT=10000
