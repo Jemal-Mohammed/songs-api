@@ -1,13 +1,15 @@
 import Song from "../models/Song.js";
 import catchValidationErrors from '../utils/validationErrors.js';
 import ErrorHandller from "../utils/errorHandller.js";
+import APIFeatures from '../utils/apifeatures.js'
 const createSong = catchValidationErrors(async (req, res, next) => {
     try {
         const { title, artist, album, genre } = req.body;
 
         // Validate that required fields are present
+        // console.log('title');
         if (!title || !artist || !album || !genre) {
-            throw new ErrorHandller('Please fill all required fields', 400);
+            throw new ErrorHandller('Please fill all required fields', 500);
         }
 
         const song = await Song.create({ title, artist, album, genre });
@@ -19,19 +21,26 @@ const createSong = catchValidationErrors(async (req, res, next) => {
 });
 
 const listSongs = catchValidationErrors(async (req, res, next) => {
+    const resPerPage = 8;
+    const count = await Song.countDocuments();
+    const apiFeatures = new APIFeatures(Song.find({type:req.params.genre}), req.query).
+    search()
+    .filter()
+    .pagination(resPerPage)
+    const songs = await apiFeatures.query;
+    
     try {
-        const songs = await Song.find();
-
         res.status(200).json(songs);
     } catch (error) {
-        next(new ErrorHandller('Failed to fetch songs', 500));
+        // Handle any errors that occur during the database query or response
+        res.status(500).json({ error: 'Failed to fetch properties' });
     }
 });
 
 const deleteSong = catchValidationErrors(async (req, res, next) => {
     try {
         const  songId  = req.params.id;
-console.log(songId);
+// console.log(songId);
         // Ensure a valid song ID is provided for deletion
         if (!songId) {
             throw new ErrorHandller('Invalid song ID', 400);
@@ -52,7 +61,8 @@ console.log(songId);
 
 const updateSong = catchValidationErrors(async (req, res, next) => {
     try {
-        const { songId } = req.params;
+        const  songId  = req.params.id;
+        // console.log(songId);
         const { title, artist, album, genre } = req.body;
 
         // Validate that required fields are present
@@ -80,7 +90,7 @@ const updateSong = catchValidationErrors(async (req, res, next) => {
 const getSingleSong = catchValidationErrors(async (req, res, next) => {
     try {
         const songId = req.params.id;
-        console.log(songId);
+        // console.log(songId);
         // Ensure a valid song ID is provided for fetching a single song
         if (!songId) {
             throw new ErrorHandller('Invalid song ID', 400);
