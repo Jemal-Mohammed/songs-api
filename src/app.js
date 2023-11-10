@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true,limit: '1024000mb' }));
 // create cors options
 var corsOptions = {
-  origin: ['http://localhost:3000','https://managing-songs-ui.vercel.app/'], // allow only the client origin
+  origin: ['http://localhost:3000','https://managing-songs-ps51.vercel.app'], // allow only the client origin
   credentials: true // enable credentials for CORS requests
 };
 app.use(cookieParser());
