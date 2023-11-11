@@ -21,7 +21,7 @@ const createSong = catchValidationErrors(async (req, res, next) => {
 });
 
 const listSongs = catchValidationErrors(async (req, res, next) => {
-    const resPerPage = 8;
+    const resPerPage = 100;
     const count = await Song.countDocuments();
     const apiFeatures = new APIFeatures(Song.find({genere:req.params.keyword}), req.query).
     search()
