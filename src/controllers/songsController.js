@@ -51,8 +51,8 @@ const deleteSong = catchValidationErrors(async (req, res, next) => {
         if (!deletedSong) {
             throw new ErrorHandller('Song not found', 404);
         }
-
-        res.status(200).json({ message: 'Song deleted successfully', data: deletedSong });
+const songs=Song.find();
+        res.status(200).json({ message: 'Song deleted successfully', data: songs });
     } catch (error) {
         next(error);
     }
